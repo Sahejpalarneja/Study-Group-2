@@ -34,12 +34,14 @@ ALLOWED_HOSTS = ['https://study-group-2.herokuapp.com/']
 # Application definition
 
 INSTALLED_APPS = [
+    'demo.apps.DemoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
 
 MIDDLEWARE = [
