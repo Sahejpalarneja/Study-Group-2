@@ -10,7 +10,7 @@
     background: #1E1E1E;
   }
   .menubar {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 65px;
     left: 0px;
@@ -31,7 +31,7 @@
     opacity: 1;
     text-align: center;
   }
-  .login_button {
+  .login{
     position: absolute;
     width: 95px;
     height: 33px;
