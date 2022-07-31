@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     <head>
-        <title>Master Mind</title>
+        <title>Master Minds</title>
         <link href="https://fonts.googleapis.com/css?family=Calibri&display=swap" rel="stylesheet" />
-        <link href="../styles/styles.css" rel = "stylesheet"/>
+        <link href="{% static 'styles/styles.css' %}" rel = "stylesheet"/>
     </head>
     <body>
         <div class="frame">
@@ -19,7 +20,8 @@
             <div class="main">
                 <div class="wave2"></div>
                 <div class="wave1"></div>
-                <div class="logo">
+                <div class="logo" >
+                    <img src="{% static 'assets/logo_size.jpg' %}" alt = 'logo'>
                 </div>
                 <span class="desc">About:<br/>Master Minds is a knowledge sharing platform where people can create forums to discuss any topic or subject.Master Minds has an open Community which can be joined by any one wanting to learn about anything, ask questions, answer other questions and take advantage of peer-to peer learning.</span>
             </div>
