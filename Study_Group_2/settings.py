@@ -15,6 +15,10 @@ import dj_database_url
 import django_heroku
 import os
 
+PASSWORD = 'ed7e7d2233955b6ad19b99ca9d1379d8e5ec5ceb099ca48f2cf592b6876ac75'
+USER = 'npoqjweuojbrhe'
+HOST = 'ec2-54-76-43-89.eu-west-1.compute.amazonaws.com'
+DATABASE = 'd4ltiqolre730l'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,13 +83,10 @@ WSGI_APPLICATION = 'Study_Group_2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'ciba',
-        }
-}
+#
 
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
