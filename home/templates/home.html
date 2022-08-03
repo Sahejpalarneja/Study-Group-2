@@ -3,37 +3,59 @@
 <html>
     <head>
         <title>Master Minds</title>
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/logo_size.jpg' %}" alt = 'logo'/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/logo_size_invert.jpg' %}" alt = 'logo'/>
+        
         <link href="https://fonts.googleapis.com/css?family=Calibri&display=swap" rel="stylesheet" />
+
+
         <link href="{% static 'styles/styles.css' %}" rel = "stylesheet"/>
-        <link href="{% static 'styles/bootstrap.css' %}" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light " id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href = "{% url 'homepage' %}">MASTER MINDS </a>
-                <button type="button" class="navbar-toggler " toggle="collapse" data-bs-target="collapse" data-bs-toggler="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle Navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <div class="navbar-nav ms-auto py-4 py-lg-0 topnav-right" style="margin-left:auto;" >
-                        <li class="nav-item bg"><button type="button" class="btn btn-primary login" style="color: #F3754C;">Login</button></li>
-                        <li class = 'nav-item bg'><button type="button" class="btn btn-primary" style="color: #F3754C;">Register</button></li>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="container-bg">
-            <div class="container-fluid frame" >
-                <div class="logo" >
-                    <img src="{% static 'assets/logo_size.jpg' %}" alt = 'logo'>
-                </div>
-                <span class="desc">About:<br/>Master Minds is a knowledge sharing platform where people can create forums to discuss any topic or subject.Master Minds has an open Community which can be joined by any one wanting to learn about anything, ask questions, answer other questions and take advantage of peer-to peer learning.</span>
-            </div>
+    <nav class="navbar navbar-expend-md navbar-light" style="background-color:#F3754C;" >
+        <a href="#"class="navbar-brand h1 mb-0">
+            <img class="d-inline-block align-top"
+            src="{% static 'assets/logo_size.jpg' %}" alt="logo" width="50" height="50"/>
+            <h2 class="d-inline-block mt-1">Master Minds</h2>
+        </a>
+        <buton class="navbar-toggler"
+            type="button" 
+            data-bs-toggle="collapse"
+            data-bs-target="#navBar"
+            aria-controls="navbarBar"
+            aria-expanded="false"
+            aria-label="Toggle Navgation"
+            >
+            <span class="navbar-toggler-icon"></span>
+        </buton>
+        <div class="collapse navbar-collapse" id="navBar">
+                <ul class="navbar-nav float-right">
+                    <li class="nav-item active nav-link" >
+                        <a href="{% url 'login' %}" style="color:black ;">Login</a>
+                    </li>
+                    <li class="nav-item active nav-link" >
+                        <a href="{% url 'register' %}" style="color:black ;">Register</a>
+                        
+                    </li>
+                </ul>
         </div>
-       
-            
+    </nav>
+    <body>
+        <div class="container-fluid background"> 
+            <div class="row empty"></div>
+            <div class="row ">
+                <div class="col-sm-3 offset-sm-2">
+                    <img class="img-reponsive" src="{% static 'assets/logo_size.jpg' %}" alt="logo">
+                </div>
+                <div class="col-sm-6">
+                    <span class="desc ">About:<br/>Master Minds is a knowledge sharing platform where people can create forums to discuss any topic or subject.Master Minds has an open Community which can be joined by any one wanting to learn about anything, ask questions, answer other questions and take advantage of peer-to peer learning.</span>
+                </div>
+            </div>
         </div>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </html> 
 
