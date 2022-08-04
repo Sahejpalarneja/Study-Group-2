@@ -16,6 +16,10 @@ import django_heroku
 import os
 
 
+PASSWORD = 'blackhorsenewtable'
+USER = 'father'
+HOST = 'study-group.cd3gbboo4xha.eu-central-1.rds.amazonaws.com'
+NAME = 'study-group'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -85,8 +89,12 @@ WSGI_APPLICATION = 'Study_Group_2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': NAME,
+        'USER':USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT':'5432'
     }
 }
 
