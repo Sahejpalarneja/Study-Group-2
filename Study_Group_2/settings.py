@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['https://study-group-2.herokuapp.com/']
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
