@@ -12,3 +12,18 @@
 .empty{
     height: 150px;
 }
+
+.sidebar {
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.chatlist {
+    background-color: black;
+}
+.chatview{
+    background:linear-gradient(260.47deg, #000000 42.81%, rgba(243, 117, 76, 0.65) 94.08%); ;
+}
