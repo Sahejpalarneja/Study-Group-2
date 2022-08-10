@@ -35,7 +35,8 @@ def register_page(request):
 			user = form.save()
 			login(request, user)
 			messages.success(request, "Registration successful." )
-			return redirect("main:main")
+			ctx = {'user':user.username}
+			return redirect("main:main",ctx)
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="registration/register.html", context={"register_form":form})
