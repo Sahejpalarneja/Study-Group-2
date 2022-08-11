@@ -24,7 +24,14 @@
                         <img  class = "mx-auto d-block mt-5"src="{% static 'assets/Add_subject.jpg' %}" alt="add subject" height="35px" width="inherit"data-toggle = 'tooltip' title="Add a subject/forum">
                     </div>
                 </div>
-                <div class="col-3 col-sm-3 chatlist"></div>
+                <div class="col-3 col-sm-3 chatlist" style="padding: 0;">
+                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
+                        <h3 class = "navbar-brand" style="margin-left: 5px;">{{user.username}}</h3>
+                    </nav>
+                    <div class="overflow-auto">
+                        
+                    </div>
+                </div>
                 <div class="col-8 col-sm-8 chatview"></div>
             </div>
         </div>

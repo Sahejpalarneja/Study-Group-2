@@ -23,7 +23,14 @@
 
 .chatlist {
     background-color: black;
+    padding: 0;
+    border-left: 2px;
+    border-left-style: solid;
+    border-left-color: silver;
 }
 .chatview{
-    background:linear-gradient(260.47deg, #000000 42.81%, rgba(243, 117, 76, 0.65) 94.08%); ;
+    background:linear-gradient(260.47deg, #000000 42.81%, rgba(243, 117, 76, 0.65) 94.08%); 
+    border-left: 2px;
+    border-left-style: solid;
+    border-left-color: silver;
 }
