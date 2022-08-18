@@ -18,4 +18,13 @@ class Subject(models.Model):
         max_length=200,
         help_text="Enter the name of the Professor if exists"
     )
-    students =  models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='students')
+
+    def __str__(self) -> str:
+        return self.name
+
+class SubjectStudent(models.Model):
+    student_id = models.IntegerField()
+    subject_id = models.CharField(max_length= 10,validators=[MinLengthValidator(1)])
+
+    def __str__(self) -> str:
+        return self.subject_id
