@@ -3,8 +3,8 @@
 <form  method="post" class="form" role="form" action="">
     {% csrf_token %}
     {{ subject_form|crispy }}  
-    <div class="modal-header">
-        <h4 class="modal-title" id="addSubjectLabel">Add a Subject</h4>
+    <div class="modal-header"style="background-color:#F3754C;">
+        <h4 class="modal-title mt-2" id="addSubjectLabel">Add a Subject</h4>
         <input type="button" class="close" data-dismiss="modal" value="X"/>
     </div>
     <div class="modal-body mt-5">
