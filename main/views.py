@@ -1,8 +1,6 @@
-from dataclasses import field
-from re import template
+
 from django.shortcuts import render
 from .forms import SubjectModelForm
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
