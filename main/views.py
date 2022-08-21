@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 
 
 from django.views import View
-from .models import SubjectStudent
+from .models import Subject, SubjectStudent
 # Create your views here.
 class MainPageView(LoginRequiredMixin,View):
     login_url = 'login'
@@ -32,3 +32,8 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
             obj.save()
             subject_student.save()
         return HttpResponseRedirect(self.success_url)
+    
+def join_class(request):
+    subjects = Subject.objects.all()
+    ctx = {'subjects':subjects}
+    return render(request,'main/join-class.html',ctx)
