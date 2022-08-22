@@ -27,7 +27,7 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
         if not self.request.is_ajax():
             obj = form.save(commit=False)
             if Subject.objects.filter(neptun = obj.neptun).count() > 0:
-                HttpResponseRedirect(self.success_url)
+                return HttpResponseRedirect(self.success_url)
             student_id = self.request.user.id
             subject_id = obj.neptun
             subject_student = SubjectStudent(student_id = student_id,subject_id = subject_id)
