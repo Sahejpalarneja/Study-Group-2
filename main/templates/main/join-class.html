@@ -1,51 +1,69 @@
-<div class="modal-header" style="background-color: #f3754c">
-  <h4 class="modal-title mt-2" id="addSubjectLabel">Join a Subject</h4>
-  <input type="button" class="close" data-dismiss="modal" value="X" />
-</div>
-<div class="modal-body mt-1">
-  <div class="form-outline">
-    <input
-      id="searchQuery"
-      type="search"
-      class="form-control"
-      placeholder="Search for a Subject/Forum"
-      aria-label="Search"
-      onkeyup="filter()"
-    />
-  </div>
-  <div class="overflow-auto mt-1">
-    <ul id="subjectList">
-        {% for subject in subjects %}
-        <li
-          style="
-            border-bottom: 2px;
-            border-bottom-style: solid;
-            border-bottom-color: black;
-          "
-        >
-          {{ subject.name }}
-        </li>
-        {% endfor %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="modal-header" style="background-color: #f3754c">
+        <h4 class="modal-title mt-2" id="addSubjectLabel">Join a Subject</h4>
+        <input type="button" class="close" data-dismiss="modal" value="X" />
+    </div>
+    <div class="modal-body mt-1">
+        <div class="form-outline">
+            <input
+            id="searchQuery"
+            type="search"
+            class="form-control"
+            placeholder="Search for a Subject/Forum"
+            aria-label="Search"
+            onkeyup="filter()"
+            />
+        </div>
+        <div class="overflow-auto mt-1">
+            <div  class = "list-group" id="list-tab" role="tablist">
+                {% for subject in subjects %}
+                <a
+                class="list-group-item list-group-item-action"
+                id="list-subject-list"
 
-    </ul>
-  
-  </div>
-</div>
-<div class="modal-footer">
-  <input
-    type="button"
-    class="btn btn-default"
-    data-dismiss="modal"
-    value="Cancel"
-  />
-</div>
+                data-toggle="list"
+                onclick="getSubjectName(this.innerText)"
+                role="tab"
+                style="
+                    border-bottom: 2px;
+                    border-bottom-style: solid;
+                    border-bottom-color: black;
+                "
+                >
+                {{ subject.name }}
+                </a>
+                {% endfor %}
+
+            </div>
+        
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="Join" style="margin-bottom: 5px;"/>
+        <input
+            type="button"
+            class="btn btn-default"
+            data-dismiss="modal"
+            value="Cancel"
+        />
+        <input type="hidden" id="joinButton" >
+        <script>
+            function getSubjectName(subject)
+            {
+                document.getElementById('joinButton').setAttribute('value',subject)
+                document.getElementById('joinButton').setAttribute('name','join')
+            }
+        </script>
+    </div> 
+</form>
 <script>
     function filter(){
         var input,filter,ul,li,a,i,txtValue;
         input = document.getElementById('searchQuery');
         filter = input.value.toUpperCase();
-        ul = document.getElementById('subjectList');
-        li = ul.getElementsByTagName('li')
+        ul = document.getElementById('list-tab');
+        li = ul.getElementsByTagName('a')
 
         for (i = 0;i<li.length; i++)
         {
@@ -61,3 +79,9 @@
         }
     }
 </script>
+<script>jQuery("a.list-group-item").click(function (e) {
+    jQuery(this).addClass('active').siblings().removeClass('active');
+});
+</script>
+
+ 
