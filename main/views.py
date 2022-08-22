@@ -1,4 +1,4 @@
-
+from django.contrib import messages
 from django.shortcuts import render
 from .forms import SubjectModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,6 +26,8 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
     def form_valid(self,form):
         if not self.request.is_ajax():
             obj = form.save(commit=False)
+            if Subject.objects.filter(neptun = obj.neptun).count() > 0:
+                HttpResponseRedirect(self.success_url)
             student_id = self.request.user.id
             subject_id = obj.neptun
             subject_student = SubjectStudent(student_id = student_id,subject_id = subject_id)
@@ -33,7 +35,25 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
             subject_student.save()
         return HttpResponseRedirect(self.success_url)
     
-def join_class(request):
-    subjects = Subject.objects.all()
-    ctx = {'subjects':subjects}
-    return render(request,'main/join-class.html',ctx)
+
+class SubjectJoin(LoginRequiredMixin,View):
+    template_name = 'main/join-class.html'
+    success_url = reverse_lazy('main:main')
+    
+    def get(self,request):
+        subjects = Subject.objects.all()
+        ctx = {'subjects':subjects}
+        return render(request,self.template_name,ctx)
+
+    def post(self,request):
+        subject_name = request.POST.get('join')
+        subject = Subject.objects.filter(name = subject_name)[0]
+        student = self.request.user
+        joined = SubjectStudent.objects.filter(student_id = student.id).filter(subject_id = subject.neptun).count()
+        if joined > 0:
+            messages.info(request,'Already Enrolled')
+        else:
+            subject_student = SubjectStudent(student_id = student.id , subject_id = subject.neptun)
+            subject_student.save()
+            messages.success(request,subject.name+' Joined')
+        return HttpResponseRedirect(self.success_url)
