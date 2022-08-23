@@ -13,7 +13,10 @@ from .models import Subject, SubjectStudent
 class MainPageView(LoginRequiredMixin,View):
     login_url = 'login'
     def get(self,request):
-        ctx = {'user':request.user}
+        student = request.user
+        subject_ids = SubjectStudent.objects.filter(student_id = student.id).only('subject_id')
+        subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
+        ctx = {'user':student,'subjects':subjects}
         return render(request,'main/main.html',ctx)
 
 
@@ -26,7 +29,7 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
     def form_valid(self,form):
         if not self.request.is_ajax():
             obj = form.save(commit=False)
-            if Subject.objects.filter(neptun = obj.neptun).count() > 0:
+            if Subject.objects.get(neptun = obj.neptun):
                 return HttpResponseRedirect(self.success_url)
             student_id = self.request.user.id
             subject_id = obj.neptun
@@ -47,7 +50,7 @@ class SubjectJoin(LoginRequiredMixin,View):
 
     def post(self,request):
         subject_name = request.POST.get('join')
-        subject = Subject.objects.filter(name = subject_name)[0]
+        subject = Subject.objects.get(name= subject_name)
         student = self.request.user
         joined = SubjectStudent.objects.filter(student_id = student.id).filter(subject_id = subject.neptun).count()
         if joined > 0:

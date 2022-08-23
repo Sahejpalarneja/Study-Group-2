@@ -35,10 +35,32 @@
                 </div>
                 <div class="col-3 col-sm-3 chatlist" style="padding: 0;">
                     <nav class="navbar navbar-light " style="background-color: #F3754C;">
-                        <h3 class = "navbar-brand" style="margin-left: 5px;">{{user.username}}</h3>
+                        <h3 class = "navbar-brand" style="margin-left: 5px; font-size: 1.5rem;">{{user.username}}</h3>
                     </nav>
                     <div class="overflow-auto">
-                        
+                        <div  class = "list-group" id="list-tab" role="tablist">
+                            {% for subject in subjects %}
+                            <li style="min-height: 70px; border-radius: 10px;">
+                                 <a
+                                class="list-group-item list-group-item-action mt-2"
+                                id="list-subject-list"
+                                data-toggle="list"
+                                onclick="getSubjectName(this.innerText)"
+                                role="tab"
+                                style="
+                                    border-bottom: 2px;
+                                    border-bottom-style: solid;
+                                    border-bottom-color: white;
+                                    min-height: 70px;
+                                    font-size: 1.25rem;
+                                    "
+                                >
+                                {{ subject.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 chatview"></div>
