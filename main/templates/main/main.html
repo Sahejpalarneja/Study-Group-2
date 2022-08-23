@@ -45,7 +45,7 @@
                                 class="list-group-item list-group-item-action mt-2"
                                 id="list-subject-list"
                                 data-toggle="list"
-                                onclick="getSubjectName(this.innerText)"
+                                onclick="chatClicked(this.innerText)"
                                 role="tab"
                                 style="
                                     border-bottom: 2px;
@@ -63,7 +63,12 @@
 
                     </div>
                 </div>
-                <div class="col-8 col-sm-8 chatview"></div>
+                <div class="col-8 col-sm-8 chatview" style="padding: 0;">
+                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
+                        <h3 class = "navbar-brand" id="chatview_nav"style="margin-left: 5px; font-size: 1.5rem;"></h3>
+                    </nav>
+                    <div class="row fixed-bottom"id="chatbox"></div>
+                </div>
             </div>
         </div>
         
@@ -88,5 +93,19 @@
         });
     
     });
+    </script>
+    <script>
+        function chatClicked(subject_name)
+        {
+            var header;
+            header = document.getElementById('chatview_nav');
+            header.innerText = subject_name;
+            var box = document.getElementById('inputbox');
+            if (box == null){
+            var html = '<input type="text" class="form-control form-control-lg align-right" id="inputbox" placeholder="Type message"><a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>'
+            document.getElementById('chatbox').innerHTML += html
+            }
+            
+        }
     </script>
 </html>

@@ -1,10 +1,11 @@
+
 from django.contrib import messages
 from django.shortcuts import render
 from .forms import SubjectModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 
 
 from django.views import View
@@ -18,6 +19,8 @@ class MainPageView(LoginRequiredMixin,View):
         subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
         ctx = {'user':student,'subjects':subjects}
         return render(request,'main/main.html',ctx)
+       
+
 
 
 class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
