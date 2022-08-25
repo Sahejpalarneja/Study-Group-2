@@ -28,3 +28,14 @@ class SubjectStudent(models.Model):
 
     def __str__(self) -> str:
         return self.subject_id
+    
+
+class Message(models.Model):
+    sender = models.CharField(max_length=50, validators=[MinLengthValidator(1)])
+    text = models.TextField()
+    N_code = models.CharField(max_length = 10,validators=[MinLengthValidator(1,"Please Enter a subject/forum code")])
+    timestamp = models.DateTimeField()
+
+    def __str__(self):
+        subject = Subject.objects.get(neptun = self.N_code)
+        return subject.name +'_'+ self.sender
