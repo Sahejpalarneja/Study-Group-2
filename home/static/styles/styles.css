@@ -35,5 +35,14 @@
     border-left-color: silver;
 }
 #chatbox{
-    width: inherit;
+    width: 100%;
+}
+#inputbox{
+    position: absolute;
+    bottom: 0px;
+}
+#sendButton{
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
 }
