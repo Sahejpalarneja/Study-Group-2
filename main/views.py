@@ -4,12 +4,13 @@ from django.shortcuts import render
 from .forms import SubjectModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+import json
 from bootstrap_modal_forms.generic import BSModalCreateView
 from django.http import HttpResponseRedirect,JsonResponse
 
 
 from django.views import View
-from .models import Subject, SubjectStudent
+from .models import Subject, SubjectStudent,Message
 # Create your views here.
 class MainPageView(LoginRequiredMixin,View):
     login_url = 'login'
@@ -17,11 +18,16 @@ class MainPageView(LoginRequiredMixin,View):
         student = request.user
         subject_ids = SubjectStudent.objects.filter(student_id = student.id).only('subject_id')
         subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
-        ctx = {'user':student,'subjects':subjects}
+        messages ={}
+        for subject in subjects:
+            l = Message.objects.filter(N_code = subject.neptun).order_by('-timestamp')
+            if l is None:
+                messages[subject.name] = None
+            else:
+                message_list = [{message.sender:message.text} for message in l ]
+                messages[subject.name] = message_list
+        ctx = {'user':student,'subjects':subjects,'messages':messages}
         return render(request,'main/main.html',ctx)
-       
-
-
 
 class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
     template_name = 'main/subject_form.html'

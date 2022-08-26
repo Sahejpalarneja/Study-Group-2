@@ -65,7 +65,12 @@
 
                     </div>
                 </div>
-                {% include 'main/chatview.html'%}
+                <div class="col-8 col-sm-8 chatview" style="padding: 0;">
+                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
+                        <h3 class = "navbar-brand" id="chatview_nav"style="margin-left: 5px; font-size: 1.5rem;"></h3>
+                    </nav>
+                    <div id="chatbox" class="chatbox"></div>
+                </div>
             </div>
         </div>
         
@@ -92,9 +97,16 @@
     });
     </script>
     <script>
+        var messages = "{{messages|safe}}"
+        messages = messages.replaceAll("'",'"') ;
+        messages = JSON.parse(messages)
+
+    </script>
+    <script >
         function chatClicked(subject_name)
         {
             var header;
+            
             header = document.getElementById('chatview_nav');
             header.innerText = subject_name;
             var box = document.getElementById('inputbox');
@@ -102,7 +114,7 @@
             var html = '<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton"></i></a>'
             document.getElementById('chatbox').innerHTML += html
             }
-            
+            console.log(messages["Mobile and Web"])
         }
     </script>
 
