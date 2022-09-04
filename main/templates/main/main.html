@@ -23,6 +23,7 @@
         
     </head>
     <body>
+        
         <div class="container-fluid" style="height: 100vh;">
             <div class="row h-100" >
                 <div class="col-1 col-sm-1 sidebar">
@@ -87,7 +88,7 @@
         
         });
     </script>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
         
         $("#join-subject").modalForm({
@@ -96,25 +97,92 @@
     
     });
     </script>
-    <script>
+    <script type="text/javascript">
         var messages = "{{messages|safe}}"
         messages = messages.replaceAll("'",'"') ;
         messages = JSON.parse(messages)
-
+        var user = "{{user.username|safe}}"
     </script>
-    <script >
+    <script type="text/javascript" >
         function chatClicked(subject_name)
         {
+            document.getElementById('chatbox').innerHTML = ''
             var header;
-            
             header = document.getElementById('chatview_nav');
             header.innerText = subject_name;
             var box = document.getElementById('inputbox');
             if (box == null){
-            var html = '<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton"></i></a>'
+            var html = '{% csrf_token %}\n<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton" onClick="sendMessage()"></i></a>'
             document.getElementById('chatbox').innerHTML += html
+            addMessages(subject_name)
             }
-            console.log(messages["Mobile and Web"])
+            
+        }
+    </script>
+    <script type="text/javascript">
+        function addMessages(subject_name){
+            var sub_messages = messages[subject_name]
+            for(let i =0;i<sub_messages.length;i++)
+            {
+                var sender = sub_messages[i]['sender']
+                if (sender === user){
+                    addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
+                }
+                else{
+                    addLeft(sub_messages[i]['sender'],sub_messages[i]['text'])
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function sendMessage(message){
+            addRight(user,message)
+            $.ajax(
+                {
+                    type:"POST",
+                    url:"{% url 'main:send'%}",
+                    data:{
+                        message:message,
+                        sender:user,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success:function(data){
+                        console.log("sent")
+                    }
+                }
+            )
+
+    
+        }
+    </script>
+    <script type="text/javascript">
+        function addRight(sender,message){
+            textright = document.createElement("div")
+            textright.classList.add('col-6')
+            textright.classList.add('msg')
+            textright.classList.add('right')
+            var senderp  =  document.createElement('p')
+            senderp.innerHTML = String(sender)
+            var textp = document.createElement('p')
+            textp.innerHTML = String(message)
+            textright.appendChild(senderp)
+            textright.appendChild(textp)
+            document.getElementById('chatbox').appendChild(textright)
+        }
+    </script>
+    <script type="text/javascript">
+        function addLeft(sender,message){
+            var textleft = document.createElement("div")
+            textleft.classList.add('col-6')
+            textleft.classList.add('msg')
+            textleft.classList.add('left')
+            var senderp  =  document.createElement('p')
+            senderp.innerHTML = sender
+            var textp = document.createElement('p')
+            textp.innerHTML = message
+            textleft.appendChild(senderp)
+            textleft.appendChild(textp)
+            document.getElementById('chatbox').appendChild(textleft)
         }
     </script>
 
