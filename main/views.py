@@ -1,12 +1,12 @@
 
+
 from django.contrib import messages
 from django.shortcuts import render
 from .forms import SubjectModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-import json
 from bootstrap_modal_forms.generic import BSModalCreateView
-from django.http import HttpResponseRedirect,JsonResponse
+from django.http import HttpResponseRedirect,response
 
 
 from django.views import View
@@ -24,7 +24,7 @@ class MainPageView(LoginRequiredMixin,View):
             if l is None:
                 messages[subject.name] = None
             else:
-                message_list = [{message.sender:message.text} for message in l ]
+                message_list = [{'sender':message.sender,'text':message.text} for message in l ]
                 messages[subject.name] = message_list
         ctx = {'user':student,'subjects':subjects,'messages':messages}
         return render(request,'main/main.html',ctx)
@@ -69,3 +69,10 @@ class SubjectJoin(LoginRequiredMixin,View):
             subject_student.save()
             messages.success(request,subject.name+' Joined')
         return HttpResponseRedirect(self.success_url)
+    
+
+def send_message(request):
+    if request.method == 'POST':
+        print("This is working")
+        return response(status_code = 210)
+    return HTTPResponse("Dikkat")
