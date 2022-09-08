@@ -135,7 +135,9 @@
         }
     </script>
     <script type="text/javascript">
-        function sendMessage(message){
+        function sendMessage(){
+            message = document.getElementById('inputbox').value
+            console.log(message)
             addRight(user,message)
             $.ajax(
                 {
