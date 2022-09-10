@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+
 import django_heroku
 import os
 
@@ -40,6 +41,7 @@ ALLOWED_HOSTS = ['https://study-group-2.herokuapp.com/']
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'api.apps.ApiConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,8 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'crispy_forms',
-    'bootstrap_modal_forms'
+    'bootstrap_modal_forms',
     
 ]
 
@@ -82,8 +85,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Study_Group_2.wsgi.application'
-
-
+REST_AUTH_SERIALIZERS = {     
+    'USER_DETAILS_SERIALIZER':'users.serializers.CustomUserDetailsSerializer' }
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

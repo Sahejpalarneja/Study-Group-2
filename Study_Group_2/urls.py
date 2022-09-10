@@ -24,4 +24,5 @@ urlpatterns = [
     path('',views.redirect_view),
     path('home/',include('home.urls')),
     path('main/',include('main.urls')),
+    path('api/',include('api.urls'))
 ]
