@@ -4,3 +4,4 @@ django_heroku==0.3.1
 gunicorn
 django-crispy-forms
 django-bootstrap-modal-forms
+django_rest_framework
