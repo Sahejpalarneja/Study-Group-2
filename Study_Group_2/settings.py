@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'crispy_forms',
     'bootstrap_modal_forms',
     
@@ -85,8 +86,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Study_Group_2.wsgi.application'
-REST_AUTH_SERIALIZERS = {     
-    'USER_DETAILS_SERIALIZER':'users.serializers.CustomUserDetailsSerializer' }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

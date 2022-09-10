@@ -4,7 +4,10 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm 
-
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver 
+from rest_framework.authtoken.models import Token
 # Create your views here.
 
 def home_page(request):
@@ -35,8 +38,13 @@ def register_page(request):
 			user = form.save()
 			login(request, user)
 			messages.success(request, "Registration successful." )
-			ctx = {'user':user.username}
-			return redirect("main:main",ctx)
+			return redirect("main:main")
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="registration/register.html", context={"register_form":form})
+
+
+@receiver(post_save,sender = settings.AUTH_USER_MODEL)
+def crreate_auth_token(sender,instance = None,created= False, **kwargs):
+	if created:
+		Token.objects.create(user = instance)

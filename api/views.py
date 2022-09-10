@@ -20,6 +20,8 @@ def regiter_user(request):
         data = serializer.errors
     return Response(data)
 
+@api_view(['GET',])
+
 
 def get_messages(request,neptun):
     messages = Message.objects.filter(N_code = neptun).order_by('timestamp')
