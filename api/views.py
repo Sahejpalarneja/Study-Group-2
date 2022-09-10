@@ -20,7 +20,6 @@ def regiter_user(request):
         data = serializer.errors
     return Response(data)
 
-@api_view(['GET',])
 
 
 def get_messages(request,neptun):
