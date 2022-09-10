@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>{{ user.username }} | Master Minds</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/logo_size_invert.jpg' %}" alt = 'logo'/>
+        
+        <link href="https://fonts.googleapis.com/css?family=Calibri&display=swap" rel="stylesheet" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <link href="{% static 'styles/styles.css' %}" rel = "stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+        
+        <div class="modal fade mt-5" tabindex="-1" role="dialog" id="modal" style="opacity: 1;">
+            <div class="modal-dialog" role="dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+        
+    </head>
+    <body>
+        
+        <div class="container-fluid" style="height: 100vh;">
+            <div class="row h-100" >
+                <div class="col-1 col-sm-1 sidebar">
+                    <div class="container">
+                        <a id="join-subject" type="button">
+                            <img class = "mx-auto d-block" src="{% static 'assets/join_class.png' %}"height = 35px width="inherit" alt="Join Class" data-toggle = 'tooltip' title = 'Join a Class/Forum'>
+                        </a>
+                        <a id="add-subject" type="button">
+                            <img  class = "mx-auto d-block mt-5"src="{% static 'assets/Add_subject.jpg' %}" alt="add subject" height="35px" width="inherit"data-toggle = 'tooltip' title="Add a subject/forum">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-3 col-sm-3 chatlist" style="padding: 0;">
+                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
+                        <h3 class = "navbar-brand" style="margin-left: 5px; font-size: 1.5rem;">{{user.username}}</h3>
+                    </nav>
+                    <div class="overflow-auto">
+                        <div  class = "list-group" id="list-tab" role="tablist">
+                            {% for subject in subjects %}
+                            <li style="min-height: 70px; border-radius: 10px;">
+                                 <a
+                                class="list-group-item list-group-item-action mt-2"
+                                id="list-subject-list"
+                                data-toggle="list"
+                                onclick="chatClicked(this.innerText)"
+                                role="tab"
+                                style="
+                                    border-bottom: 2px;
+                                    border-bottom-style: solid;
+                                    border-bottom-color: white;
+                                    min-height: 70px;
+                                    font-size: 1.25rem;
+                                    "
+                                >
+                                {{ subject.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 chatview" style="padding: 0;">
+                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
+                        <h3 class = "navbar-brand" id="chatview_nav"style="margin-left: 5px; font-size: 1.5rem;"></h3>
+                    </nav>
+                    <div id="chatbox" class="chatbox"></div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js'%}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        
+            $("#add-subject").modalForm({
+                formURL: "{% url 'main:add' %}"
+            });
+        
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        
+        $("#join-subject").modalForm({
+            formURL: "{% url 'main:join' %}"
+        });
+    
+    });
+    </script>
+    <script type="text/javascript">
+        var user = "{{user.username|safe}}"
+        var subject;
+    </script>
+    <script type="text/javascript" >
+        function chatClicked(subject_name)
+        {
+            subject = subject_name
+            document.getElementById('chatbox').innerHTML = ''
+            var header;
+            header = document.getElementById('chatview_nav');
+            header.innerText = subject_name;
+            var box = document.getElementById('inputbox');
+            if (box == null){
+            var html = '{% csrf_token %}\n<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton" onClick="sendMessage()"></i></a>'
+            document.getElementById('chatbox').innerHTML += html
+            get_messages(subject_name)
+            }
+            
+        }
+    </script>
+    <script>
+        function get_messages(subject_name){
+            $.ajax(
+                {
+                    type:'GET',
+                    url:"{% url 'main:get'%}",
+                    data:{
+                        subject :subject_name,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success:function(data){
+                        addMessages(data)
+                    }
+
+                }
+            )
+
+        }
+    </script>
+    <script type="text/javascript">
+        function addMessages(sub_messages){
+            sub_messages = sub_messages.replaceAll("'",'"') ;
+            console.log(sub_messages)
+            sub_messages = JSON.parse(sub_messages)
+            for(let i =0;i<sub_messages.length;i++)
+            {
+                var sender = sub_messages[i]['sender']
+                if (sender === user){
+                    addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
+                }
+                else{
+                    addLeft(sub_messages[i]['sender'],sub_messages[i]['text'])
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function sendMessage(){
+            message = document.getElementById('inputbox').value
+            console.log(subject)
+            addRight(user,message)
+            $.ajax(
+                {
+                    type:"POST",
+                    url:"{% url 'main:send'%}",
+                    data:{
+                        message:message,
+                        sender:user,
+                        subject:subject,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success:function(data){
+                        console.log("sent")
+                    }
+                }
+            )
+
+    
+        }
+    </script>
+    <script type="text/javascript">
+        function addRight(sender,message){
+            textright = document.createElement("div")
+            textright.classList.add('col-6')
+            textright.classList.add('msg')
+            textright.classList.add('right')
+            var senderp  =  document.createElement('p')
+            senderp.innerHTML = String(sender)
+            var textp = document.createElement('p')
+            textp.innerHTML = String(message)
+            textright.appendChild(senderp)
+            textright.appendChild(textp)
+            document.getElementById('chatbox').appendChild(textright)
+        }
+    </script>
+    <script type="text/javascript">
+        function addLeft(sender,message){
+            var textleft = document.createElement("div")
+            textleft.classList.add('col-6')
+            textleft.classList.add('msg')
+            textleft.classList.add('left')
+            var senderp  =  document.createElement('p')
+            senderp.innerHTML = sender
+            var textp = document.createElement('p')
+            textp.innerHTML = message
+            textleft.appendChild(senderp)
+            textleft.appendChild(textp)
+            document.getElementById('chatbox').appendChild(textleft)
+        }
+    </script>
+
+</html>

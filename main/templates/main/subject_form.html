@@ -1,0 +1,38 @@
+{% load crispy_forms_tags %} 
+
+<form  method="post" class="form" role="form" action="">
+    {% csrf_token %}
+    {{ subject_form|crispy }}  
+    <div class="modal-header"style="background-color:#F3754C;">
+        <h4 class="modal-title mt-2" id="addSubjectLabel">Add a Subject</h4>
+        <input type="button" class="close" data-dismiss="modal" value="X"/>
+    </div>
+    <div class="modal-body mt-5">
+    {{ form.non_field_errors }}
+        <div class="form-group">
+        {% for field in form %}
+            <div class="form-group">
+            {% if field.errors %}
+                <ul class="form-errors">
+                {% for error in field.errors %}
+                    <li>
+                        <span class="fa fa-exclamation-triangle"></span>
+                        <strong>{{ error|escape }}</strong>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+                {% if field.help_text %}
+                <div class="form-helptext">
+                {{ field.help_text }}
+                </div>
+                {% endif %}
+                {{ field.label_tag }} : {{ field }}        
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal-footer">
+        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"/>
+        <input type="submit" class="btn btn-primary" value="Save" style="margin-bottom: 5px;"/>
+    </div>
+</form>
