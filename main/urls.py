@@ -5,5 +5,7 @@ urlpatterns = [
     #path('',views.MainPageView.as_view(),name='main'),
     path('',views.MainPageView.as_view(),name='main'),
     path('add',views.SubjectCreate.as_view(),name='add'),
-    path('join',views.SubjectJoin.as_view(),name='join')
+    path('join',views.SubjectJoin.as_view(),name='join'),
+    path('sendmessage',views.send_message,name ="send"),
+    path('getmessage',views.get_message,name = 'get')
 ]

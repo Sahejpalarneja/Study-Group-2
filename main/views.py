@@ -1,14 +1,18 @@
+
+from datetime import datetime
+from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render
 from .forms import SubjectModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
+import json
 from django.http import HttpResponseRedirect
 
 
 from django.views import View
-from .models import Subject, SubjectStudent
+from .models import Subject, SubjectStudent,Message
 # Create your views here.
 class MainPageView(LoginRequiredMixin,View):
     login_url = 'login'
@@ -18,7 +22,6 @@ class MainPageView(LoginRequiredMixin,View):
         subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
         ctx = {'user':student,'subjects':subjects}
         return render(request,'main/main.html',ctx)
-
 
 class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
     template_name = 'main/subject_form.html'
@@ -60,3 +63,26 @@ class SubjectJoin(LoginRequiredMixin,View):
             subject_student.save()
             messages.success(request,subject.name+' Joined')
         return HttpResponseRedirect(self.success_url)
+    
+
+def send_message(request):
+    if request.method == 'POST':
+        sender = request.POST['sender']
+        message = request.POST['message']
+        timestamp = datetime.now()
+        subject = request.POST['subject']
+        n_code = Subject.objects.get(name = subject)
+        message_obj = Message(sender = sender,text = message,N_code = n_code.neptun ,timestamp = timestamp)
+        message_obj.save()
+        return HttpResponse('Success')
+    return HttpResponse("Dikkat")
+
+def get_message(request):
+    if request.method == 'GET':
+        subject = Subject.objects.get(name = request.GET['subject'] )
+        l = Message.objects.filter(N_code = subject.neptun).order_by('timestamp')
+        print(len(l))
+        message_list = [{'sender':message.sender,'text':message.text} for message in l ]
+        message_list = json.dumps(message_list,indent=2)
+        return HttpResponse(message_list)
+        
