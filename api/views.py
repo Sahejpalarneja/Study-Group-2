@@ -1,12 +1,13 @@
-from django.shortcuts import render
+
+import api
 from .serializer import MessageSerilizer, SubjectSerializer,SubjectStudentSerializer, UserSerializer
 from main.models import Message,Subject
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
 
-from api import serializer
 
 # Create your views here.
 @api_view(['POST',])
@@ -21,12 +22,15 @@ def regiter_user(request):
     return Response(data)
 
 
-
+@api_view(['GET',])
+@permission_classes([IsAuthenticated,])
 def get_messages(request,neptun):
     messages = Message.objects.filter(N_code = neptun).order_by('timestamp')
     serializer = MessageSerilizer(messages, many = True)
     return JsonResponse(serializer.data,safe=False)
 
+@api_view(['GET',])
+@permission_classes([IsAuthenticated,])
 def get_subjects(request):
     subjects = Subject.objects.all()
     serializer = SubjectSerializer(subjects,many = True)

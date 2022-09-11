@@ -1,4 +1,4 @@
-from django.urls import path,include
+from django.urls import path
 from api import views
 from rest_framework.authtoken.views import obtain_auth_token
 app_name = 'api'
