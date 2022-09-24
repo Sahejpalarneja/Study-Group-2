@@ -1,8 +1,7 @@
-from .serializer import MessageSerilizer, SubjectSerializer,SubjectStudentSerializer, UserSerializer
-from main.models import Message,Subject
+from .serializer import MessageSerilizer, SubjectSerializer, UserSerializer
+from main.models import Message,Subject,SubjectStudent
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -52,3 +51,12 @@ def get_user_id(request):
     except:
         data['id'] = 'This is id'
     return Response(data)
+
+@api_view(['GET',])
+@permission_classes([IsAuthenticated])
+def get_user_classes(request):
+    user_id = request.GET['id']
+    subject_ids = SubjectStudent.objects.filter(student_id = user_id).only('subject_id')
+    subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
+    serializer = SubjectSerializer(subjects,many = True)
+    return JsonResponse(serializer.data, safe = False)
