@@ -6,5 +6,6 @@ urlpatterns = [
     path('messages/<str:neptun>',views.get_messages,name = 'messages'),
     path('subjects',views.get_subjects,name = 'subjects'),
     path('register',views.regiter_user,name = 'register'),
-    path('login',views.Login.as_view(),name = 'login')
+    path('login',obtain_auth_token,name = 'login'),
+    path('get_id',views.get_user_id,name='get_id')
 ]

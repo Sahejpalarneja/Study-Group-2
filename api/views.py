@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
+
 
 
 
@@ -42,9 +42,10 @@ def get_subjects(request):
     serializer = SubjectSerializer(subjects,many = True)
     return JsonResponse(serializer.data, safe = False)
 
-
-class Login(ObtainAuthToken):
-    @api_view(['POST',])
-    def post(self,request):
-        request.data['id'] = User.objects.get(username = request.data['username'])
-        return super().post(request)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_id(request):
+    id = User.objects.get(username = request.GET['username']).pk    
+    data = {}
+    data['id'] = id
+    Response(data)
