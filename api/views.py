@@ -45,7 +45,7 @@ def get_subjects(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_id(request):
-    id = User.objects.get(username = request.GET['username']).pk    
+    #id = User.objects.get(username = request.GET['username']).pk    
     data = {}
-    data['id'] = id
+    data['id'] = 'This is ID '
     Response(data)
