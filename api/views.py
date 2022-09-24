@@ -36,7 +36,6 @@ def get_messages(request,neptun):
     return JsonResponse(serializer.data,safe=False)
 
 @api_view(['GET',])
-@permission_classes([IsAuthenticated,])
 def get_subjects(request):
     subjects = Subject.objects.all()
     serializer = SubjectSerializer(subjects,many = True)
