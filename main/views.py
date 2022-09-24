@@ -32,14 +32,16 @@ class SubjectCreate(LoginRequiredMixin,BSModalCreateView):
     def form_valid(self,form):
         if not self.request.is_ajax():
             obj = form.save(commit=False)
-            if Subject.objects.get(neptun = obj.neptun):
+            try:
+                Subject.objects.get(neptun = obj.neptun)
                 return HttpResponseRedirect(self.success_url)
-            student_id = self.request.user.id
-            subject_id = obj.neptun
-            subject_student = SubjectStudent(student_id = student_id,subject_id = subject_id)
-            obj.save()
-            subject_student.save()
-        return HttpResponseRedirect(self.success_url)
+            except:
+                student_id = self.request.user.id
+                subject_id = obj.neptun
+                subject_student = SubjectStudent(student_id = student_id,subject_id = subject_id)
+                obj.save()
+                subject_student.save()
+                return HttpResponseRedirect(self.success_url)
     
 
 class SubjectJoin(LoginRequiredMixin,View):
