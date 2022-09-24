@@ -29,7 +29,8 @@ def regiter_user(request):
 
 @api_view(['GET',])
 @permission_classes([IsAuthenticated,])
-def get_messages(request,neptun):
+def get_messages(request):
+    neptun = request.GET['neptun']
     messages = Message.objects.filter(N_code = neptun).order_by('timestamp')
     serializer = MessageSerilizer(messages, many = True)
     return JsonResponse(serializer.data,safe=False)
