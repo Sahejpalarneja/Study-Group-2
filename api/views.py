@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 
+from api import serializer
+
 
 
 
@@ -70,3 +72,15 @@ def join_class(request):
     subject_student = SubjectStudent(student_id = user_id , subject_id = neptun)
     subject_student.save()
     return Response('Class Joined')
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated])
+def add_subject(request):
+    serializer = SubjectSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response('Subject Added')
+    else:
+        Response('Data not valid')
+    
