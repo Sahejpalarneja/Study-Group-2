@@ -82,5 +82,5 @@ def add_subject(request):
         serializer.save()
         return Response('Subject Added')
     else:
-        Response('Data not valid')
+        return Response('Data not valid')
     
