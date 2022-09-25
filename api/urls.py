@@ -8,5 +8,6 @@ urlpatterns = [
     path('register',views.regiter_user,name = 'register'),
     path('login',obtain_auth_token,name = 'login'),
     path('get_id',views.get_user_id,name='get_id'),
-    path('get_user_subjects',views.get_user_classes,name='user_classes')
+    path('get_user_subjects',views.get_user_classes,name='user_classes'),
+    path('join_class',views.join_class,name='join_class')
 ]

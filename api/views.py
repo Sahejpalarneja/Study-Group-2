@@ -61,3 +61,12 @@ def get_user_classes(request):
     subjects = [Subject.objects.get(neptun = id)for id in subject_ids]
     serializer = SubjectSerializer(subjects,many = True)
     return JsonResponse(serializer.data, safe = False)
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated])
+def join_class(request):
+    neptun = request.GET['neptun']
+    user_id = request.GET['id']
+    subject_student = SubjectStudent(student_id = user_id , subject_id = neptun)
+    subject_student.save()
+    return Response('Class Joined')
