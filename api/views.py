@@ -1,3 +1,5 @@
+import datetime
+from email import message
 from .serializer import MessageSerilizer, SubjectSerializer, UserSerializer
 from main.models import Message,Subject,SubjectStudent
 from django.http import JsonResponse
@@ -83,4 +85,17 @@ def add_subject(request):
         return Response('Subject Added')
     else:
         return Response('Data not valid')
-    
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated])
+def send_message(request):
+    data = request.data
+    data._mutable = True
+    data['timestamp'] = datetime.datetime.now()
+    data._mutable = False
+    serializer = MessageSerilizer(data = data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response('Sent')
+    else:
+        return Response('Wrong values')
