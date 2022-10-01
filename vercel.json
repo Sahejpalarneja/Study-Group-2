@@ -10,6 +10,5 @@
             "src": "/(.*)",
             "dest": "Study_Group_2/wsgi.py"
         }
-    ],
-    "framework": "null"
+    ]
 }
