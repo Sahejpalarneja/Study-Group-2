@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-m0t372j@q2we)f_!mf-b&caes^0=c#rc9gw7-85h=u5t^^kkpx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://study-group-2.herokuapp.com/','*']
+ALLOWED_HOSTS = ['https://study-group-2.herokuapp.com/','*','.vercel.app']
 
 
 # Application definition
