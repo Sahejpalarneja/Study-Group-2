@@ -7,30 +7,24 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "master" ]
-  schedule:
-    - cron: '38 22 * * 4'
-inputs:
-  sub-command:
-    description: deploy
-    required: true
-    default: deploy
-  environment:
-    description: Study-Group-2-dev
-    required: true
-  aws-access-key-id:
-    description: secrets.AWS_ACCESS_KEY
-    required: true
-  aws-secret-access-key:
-    description: secrets.AWS_SECRET_ACCESS_KEY
-    required: true
     
-runs:
-  using: docker
-  image: Dockerfile
-  args:
-    - ${{ inputs.sub-command }}
-    - ${{ inputs.environment }}
-    - ${{ inputs.optional-args }}
-  env:
-    AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
-    AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout source code
+      uses: actions/checkout@v2
+
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
+
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: Study_Group_2
+        environment_name: Study-Group-2-dev
+        region: eu-central-1
+        deployment_package: deploy.zip
