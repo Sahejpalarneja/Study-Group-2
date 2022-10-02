@@ -23,3 +23,14 @@ inputs:
   aws-secret-access-key:
     description: secrets.AWS_SECRET_ACCESS_KEY
     required: true
+    
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.sub-command }}
+    - ${{ inputs.environment }}
+    - ${{ inputs.optional-args }}
+  env:
+    AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
+    AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
