@@ -1,5 +1,4 @@
 name: Elastic Beanstalk Action
-description: Deploy to Elastic Beanstalk
 
 on:
   push:
@@ -7,19 +6,24 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "master" ]
-  schedule:
-    - cron: '38 22 * * 4'
-inputs:
-  sub-command:
-    description: deploy
-    required: true
-    default: deploy
-  environment:
-    description: Study-Group-2-dev
-    required: true
-  aws-access-key-id:
-    description: secrets.AWS_ACCESS_KEY
-    required: true
-  aws-secret-access-key:
-    description: secrets.AWS_SECRET_ACCESS_KEY
-    required: true
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install EB CLI using pip
+        run: |
+          python -m pip install --upgrade pip
+          pip install awsebcli
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          eb deploy
