@@ -1,0 +1,17 @@
+name: Elastic Beanstalk Action
+description: Deploy to Elastic Beanstalk
+
+inputs:
+  sub-command:
+    description: deploy
+    required: true
+    default: deploy
+  environment:
+    description: Study-Group-2-dev
+    required: true
+  aws-access-key-id:
+    description: secrets.AWS_ACCESS_KEY
+    required: true
+  aws-secret-access-key:
+    description: secrets.AWS_SECRET_ACCESS_KEY
+    required: true
