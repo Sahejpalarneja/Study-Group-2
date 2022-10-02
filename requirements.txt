@@ -4,3 +4,5 @@ gunicorn
 django-crispy-forms
 django-bootstrap-modal-forms
 django_rest_framework
+psycopg2-binary
+whitenoise
