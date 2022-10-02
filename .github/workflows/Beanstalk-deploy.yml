@@ -26,4 +26,4 @@ jobs:
           pip install awsebcli
       - name: Deploy to Elastic Beanstalk
         run: |
-          eb deploy
+          eb deploy Study-Group-2-dev
