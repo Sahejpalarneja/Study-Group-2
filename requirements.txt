@@ -1,7 +1,6 @@
 dj_database_url==0.5.0
 Django==3.2.5
 gunicorn
-django_heroku==0.3.1
 django-crispy-forms
 django-bootstrap-modal-forms
 django_rest_framework
