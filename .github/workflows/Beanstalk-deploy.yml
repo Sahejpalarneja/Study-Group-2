@@ -25,5 +25,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: Study_Group_2
         environment_name: Study-Group-2-dev
+        version_label: :12345
         region: eu-central-1
         deployment_package: deploy.zip
