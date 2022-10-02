@@ -1,5 +1,4 @@
 name: Elastic Beanstalk Action
-description: Deploy to Elastic Beanstalk
 
 on:
   push:
