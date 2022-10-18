@@ -31,52 +31,50 @@
     <div class="row app-one">
         <div class="col-sm-4 side">
             <div class="side-one">
-          <div class="row heading">
-            <div class="col-sm-3 col-xs-3 username">
-                <span>
-                  <p>{{user.username}}</p>
-                </span>
-            </div>
-            <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
-              <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
-            </div>
-          </div>
-
-          <div class="row searchBox">
-            <div class="col-sm-12 searchBox-inner">
-              <div class="form-group has-feedback">
-                <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
-                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="row sideBar">
-            {%for subject in subjects %}
-            <div class="row sideBar-body" onclick="chatClicked(this.innerText)">
-              <div class="col-sm-9 col-xs-9 sideBar-main">
-                <div class="row">
-                  <div class="col-sm-8 col-xs-8 sideBar-name">
-                    <span class="name-meta">{{subject.name}}
-                  </span>
-                  </div>
+                <div class="row heading">
+                    <div class="col-sm-3 col-xs-3 username">
+                        <span>
+                        <p>{{user.username}}</p>
+                        </span>
+                    </div>
+                    <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
+                    <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+                    </div>
                 </div>
-              </div>
-            </div>
-            {%endfor%}
-          </div>
+
+                <div class="row searchBox">
+                    <div class="col-sm-12 searchBox-inner">
+                    <div class="form-group has-feedback">
+                        <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="row sideBar">
+                    {%for subject in subjects %}
+                    <div class="row sideBar-body" onclick="chatClicked(this.innerText)">
+                    <div class="col-sm-9 col-xs-9 sideBar-main">
+                        <div class="row">
+                        <div class="col-sm-8 col-xs-8 sideBar-name">
+                            <span class="name-meta">{{subject.name}}
+                        </span>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    {%endfor%}
+                </div>
             </div>
         </div>
-        <div class="col-sm-8 conversation">
+        <div class="col-sm-8 conversation" id="con-box">
         <div class="row heading">
           <div class="col-sm-8 col-xs-7 heading-name">
-            <h4 class="heading-name-meta" id="chat-heading">
-            </h4>
+            <h2 class="heading-name-meta" id="chat-heading">
+            </h2>
           </div>
         </div>
         <div class="row message" id="conversation">
-        </div>
-        <div class="row reply">
         </div>
         </div>
   </div>

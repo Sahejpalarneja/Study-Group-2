@@ -20,10 +20,10 @@ function chatClicked(subject_name)
     header.innerText = subject_name;
     var box = document.getElementById('reply');
     if (box == null){
-    var html = ''
-    document.getElementById('conversation').innerHTML += html
+    var html = '<div class="row reply"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment"></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true"></i></div></div>'
     get_messages(subject_name,'getmessage')
     }
+    document.getElementById('con-box').innerHTML += html
     
 }
 function get_messages(subject_name,url){

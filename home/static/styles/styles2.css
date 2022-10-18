@@ -314,6 +314,7 @@ html{
   /*width: 100%;*/
   border-left: 1px solid rgba(0, 0, 0, .08);
   /*overflow-y: auto;*/
+  
 }
 
 .message {
@@ -411,35 +412,14 @@ html{
 
 .reply {
   height: 60px;
-  width: 100%;
+  width: inherit;
   background-color: #f5f1ee;
   padding: 10px 5px 10px 5px !important;
   margin: 0 !important;
+  position: absolute;
+  bottom: 0px;
   z-index: 1000;
 }
-
-.reply-emojis {
-  padding: 5px !important;
-}
-
-.reply-emojis i {
-  text-align: center;
-  padding: 5px 5px 5px 5px !important;
-  color: #93918f;
-  cursor: pointer;
-}
-
-.reply-recording {
-  padding: 5px !important;
-}
-
-.reply-recording i {
-  text-align: center;
-  padding: 5px !important;
-  color: #93918f;
-  cursor: pointer;
-}
-
 .reply-send {
   padding: 5px !important;
 }
@@ -562,13 +542,7 @@ html{
   .reply {
     height: 70px;
   }
-  .reply-emojis {
-    padding: 5px 0 !important;
-  }
-  .reply-emojis i {
-    padding: 5px 2px !important;
-    font-size: 1.8em !important;
-  }
+
   .reply-main {
     padding: 2px 8px !important;
   }
@@ -576,13 +550,7 @@ html{
     padding: 8px !important;
     font-size: 18px;
   }
-  .reply-recording {
-    padding: 5px 0 !important;
-  }
-  .reply-recording i {
-    padding: 5px 0 !important;
-    font-size: 1.8em !important;
-  }
+
   .reply-send {
     padding: 5px 0 !important;
   }
