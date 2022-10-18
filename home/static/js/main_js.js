@@ -100,7 +100,9 @@ function addMessages(sub_messages){
 }
 
 function sendMessage(){
-    message = document.getElementById('inputbox').value
+    input_box = document.getElementById('inputbox')
+    message = input_box.value
+    input_box.value = ''
     addRight(user,message)
     $.ajax(
         {
