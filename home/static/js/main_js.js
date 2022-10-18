@@ -43,20 +43,6 @@ function get_messages(subject_name,url){
     )
 
 }
-function addMessages(sub_messages){
-    sub_messages = sub_messages.replaceAll("'",'"') ;
-    sub_messages = JSON.parse(sub_messages)
-    for(let i =0;i<sub_messages.length;i++)
-    {
-        var sender = sub_messages[i]['sender']
-        if (sender === user){
-            addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
-        }
-        else{
-            addLeft(sub_messages[i]['sender'],sub_messages[i]['text'])
-        }
-    }
-}
 function addRight(sender,message){
     textcontainer = document.createElement("div")
     textcontainer.classList.add('row')
@@ -82,24 +68,26 @@ function addLeft(sender,message){
     textspan = document.createElement('div')
     textspan.classList.add('col-sm-12')
     textspan.classList.add('message-main-receiver')
-    senderp  =  document.createElement('p')
+    senderp  =  document.createElement('span')
     senderp.classList.add('receiver')
     senderp.innerHTML = String(sender)
     var textp = document.createElement('p')
     textp.classList.add('message-text')
     textp.innerHTML = String(message)
+    senderp.appendChild(textp)
     textspan.appendChild(senderp)
-    textspan.appendChild(textp)
     textcontainer.appendChild(textspan)
     document.getElementById('conversation').appendChild(textcontainer)
 }
 function addMessages(sub_messages){
     sub_messages = sub_messages.replaceAll("'",'"') ;
-    console.log(sub_messages)
     sub_messages = JSON.parse(sub_messages)
     for(let i =0;i<sub_messages.length;i++)
     {
         var sender = sub_messages[i]['sender']
+        console.log("This is sender: "+sender)
+        console.log("This is user: "+user)
+
         if (sender === user){
             addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
         }

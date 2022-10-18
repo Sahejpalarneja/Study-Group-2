@@ -95,5 +95,11 @@ $(function(){
 })
 </script>
 <script type="text/javascript" src="{% static 'js/main_js.js' %}"></script>
+<script type="text/javascript">
+    var user = "{{user.username|safe}}"
+    set_user(user)
+    var token = '{{csrf_token}}'
+    set_token(token)
+</script>
 </body>
 </html>
