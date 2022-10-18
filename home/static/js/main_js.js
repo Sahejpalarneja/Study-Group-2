@@ -14,14 +14,14 @@ function set_subject(current_subject){
 function chatClicked(subject_name)
 {
     set_subject(subject_name)
-    document.getElementById('chatbox').innerHTML = ''
+    document.getElementById('conversation').innerHTML = ''
     var header;
-    header = document.getElementById('chatview_nav');
+    header = document.getElementById('chat-heading');
     header.innerText = subject_name;
-    var box = document.getElementById('inputbox');
+    var box = document.getElementById('reply');
     if (box == null){
-    var html = '<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton" onClick="sendMessage()"></i></a>'
-    document.getElementById('chatbox').innerHTML += html
+    var html = ''
+    document.getElementById('conversation').innerHTML += html
     get_messages(subject_name,'getmessage')
     }
     
@@ -58,30 +58,40 @@ function addMessages(sub_messages){
     }
 }
 function addRight(sender,message){
-    textright = document.createElement("div")
-    textright.classList.add('col-6')
-    textright.classList.add('msg')
-    textright.classList.add('right')
-    var senderp  =  document.createElement('p')
+    textcontainer = document.createElement("div")
+    textcontainer.classList.add('row')
+    textcontainer.classList.add('message-body')
+    textspan = document.createElement('div')
+    textspan.classList.add('col-sm-12')
+    textspan.classList.add('message-main-sender')
+    senderp  =  document.createElement('span')
+    senderp.classList.add('sender')
     senderp.innerHTML = String(sender)
     var textp = document.createElement('p')
+    textp.classList.add('message-text')
     textp.innerHTML = String(message)
-    textright.appendChild(senderp)
-    textright.appendChild(textp)
-    document.getElementById('chatbox').appendChild(textright)
+    senderp.appendChild(textp)
+    textspan.appendChild(senderp)
+    textcontainer.appendChild(textspan)
+    document.getElementById('conversation').appendChild(textcontainer)
 }
 function addLeft(sender,message){
-    var textleft = document.createElement("div")
-    textleft.classList.add('col-6')
-    textleft.classList.add('msg')
-    textleft.classList.add('left')
-    var senderp  =  document.createElement('p')
-    senderp.innerHTML = sender
+    textcontainer = document.createElement("div")
+    textcontainer.classList.add('row')
+    textcontainer.classList.add('message-body-receiver')
+    textspan = document.createElement('div')
+    textspan.classList.add('col-sm-12')
+    textspan.classList.add('message-main-receiver')
+    senderp  =  document.createElement('p')
+    senderp.classList.add('receiver')
+    senderp.innerHTML = String(sender)
     var textp = document.createElement('p')
-    textp.innerHTML = message
-    textleft.appendChild(senderp)
-    textleft.appendChild(textp)
-    document.getElementById('chatbox').appendChild(textleft)
+    textp.classList.add('message-text')
+    textp.innerHTML = String(message)
+    textspan.appendChild(senderp)
+    textspan.appendChild(textp)
+    textcontainer.appendChild(textspan)
+    document.getElementById('conversation').appendChild(textcontainer)
 }
 function addMessages(sub_messages){
     sub_messages = sub_messages.replaceAll("'",'"') ;
@@ -100,7 +110,7 @@ function addMessages(sub_messages){
 }
 
 function sendMessage(){
-    message = document.getElementById('inputbox').value
+    message = document.getElementById('reply').value
     addRight(user,message)
     $.ajax(
         {
