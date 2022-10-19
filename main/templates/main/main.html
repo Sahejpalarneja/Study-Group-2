@@ -32,14 +32,19 @@
         <div class="col-sm-4 side">
             <div class="side-one">
                 <div class="row heading">
-                    <div class="col-sm-3 col-xs-3 username">
-                        <span>
-                        <p>{{user.username}}</p>
-                        </span>
-                    </div>
-                    <div class="col-sm-1 col-xs-1  heading-dot  pull-right">
-                    <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
-                    </div>
+                  <nav class="navbar navbar-light ">
+                    <h3 class = "navbar-brand mb-10 " style="margin-left: 5px; font-size: 1.5rem;">{{user.username}}</h3>
+                        <ul class="nav-item dropright">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu
+                          </a>
+                          <div class="dropdown-menu" style="visibility: visible;" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                          </div>
+                        </ul>
+                  </nav>
                 </div>
 
                 <div class="row searchBox">
@@ -75,6 +80,7 @@
           </div>
         </div>
         <div class="row message" id="conversation">
+          
         </div>
         </div>
   </div>
@@ -93,6 +99,7 @@ $(function(){
 })
 </script>
 <script type="text/javascript" src="{% static 'js/main_js.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 <script type="text/javascript">
     var user = "{{user.username|safe}}"
     set_user(user)
