@@ -20,7 +20,7 @@ function chatClicked(subject_name)
     header.innerText = subject_name;
     var box = document.getElementById('reply');
     if (box == null){
-    var html = '<div class="row reply"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment"></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true"></i></div></div>'
+    var html = '<div class="row reply"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment"></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true" onClick="sendMessage()"></i></div></div>'
     get_messages(subject_name,'getmessage')
     }
     document.getElementById('con-box').innerHTML += html
@@ -85,8 +85,7 @@ function addMessages(sub_messages){
     for(let i =0;i<sub_messages.length;i++)
     {
         var sender = sub_messages[i]['sender']
-        console.log("This is sender: "+sender)
-        console.log("This is user: "+user)
+
 
         if (sender === user){
             addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
@@ -98,7 +97,8 @@ function addMessages(sub_messages){
 }
 
 function sendMessage(){
-    message = document.getElementById('reply').value
+    message = document.getElementById('comment').value
+    console.log(message)
     addRight(user,message)
     $.ajax(
         {
