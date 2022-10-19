@@ -1,112 +1,115 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
-    <head>
-        <title>{{ user.username }} | Master Minds</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/logo_size_invert.jpg' %}" alt = 'logo'/>
-        
-        <link href="https://fonts.googleapis.com/css?family=Calibri&display=swap" rel="stylesheet" />
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-        <link href="{% static 'styles/styles.css' %}" rel = "stylesheet"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-
-        
-        <div class="modal fade mt-5" tabindex="-1" role="dialog" id="modal" style="opacity: 1;">
-            <div class="modal-dialog" role="dialog">
-                <div class="modal-content"></div>
-            </div>
+{% load static %}
+<head>
+    <!--Metadata-->
+    <meta charset="utf-8">
+    <title>{{user.username }} | Master Minds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/logo_size_invert.jpg' %}" alt = 'logo'/>
+  
+    <!--CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'styles/styles2.css'%}">
+    <!--Modal code-->
+    <div class="modal fade mt-5" tabindex="-1" role="dialog" id="modal" style="opacity: 1;">
+        <div class="modal-dialog" role="dialog">
+          <div class="modal-content">
+          </div>
         </div>
-        
-    </head>
-    <body>
-        
-        <div class="container-fluid" style="height: 100vh;">
-            <div class="row h-100" >
-                <div class="col-1 col-sm-1 sidebar">
-                    <div class="container">
-                        <a id="join-subject" type="button">
-                            <img class = "mx-auto d-block" src="{% static 'assets/join_class.png' %}"height = 35px width="inherit" alt="Join Class" data-toggle = 'tooltip' title = 'Join a Class/Forum'>
-                        </a>
-                        <a id="add-subject" type="button">
-                            <img  class = "mx-auto d-block mt-5"src="{% static 'assets/Add_subject.jpg' %}" alt="add subject" height="35px" width="inherit"data-toggle = 'tooltip' title="Add a subject/forum">
-                        </a>
-                        <a id ="logout" type="button" href="{% url 'home'%}">
-                            <img src="{% static 'assets/logout.png' %}" alt="logout"height="35px" width="inherit" >
-                        </a>
-                    </div>
-                </div>
-                <div class="col-3 col-sm-3 chatlist" style="padding: 0;">
-                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
-                        <h3 class = "navbar-brand" style="margin-left: 5px; font-size: 1.5rem;">{{user.username}}</h3>
-                    </nav>
-                    <div class="overflow-auto">
-                        <div  class = "list-group" id="list-tab" role="tablist">
-                            {% for subject in subjects %}
-                            <li style="min-height: 70px; border-radius: 10px;">
-                                 <a
-                                class="list-group-item list-group-item-action mt-2"
-                                id="list-subject-list"
-                                data-toggle="list"
-                                onclick="chatClicked(this.innerText)"
-                                role="tab"
-                                style="
-                                    border-bottom: 2px;
-                                    border-bottom-style: solid;
-                                    border-bottom-color: white;
-                                    min-height: 70px;
-                                    font-size: 1.25rem;
-                                    "
-                                >
-                                {{ subject.name }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </div>
+      </div>
+</head>
 
+<body>
+
+  <div class="container app">
+    <div class="row app-one">
+        <div class="col-sm-4 side">
+            <div class="side-one">
+                <div class="row heading">
+                  <nav class="navbar navbar-light ">
+                    <h3 class = "navbar-brand mb-10 " style="margin-left: 5px; font-size: 1.5rem;">{{user.username}}</h3>
+                  </nav>
+                </div>
+
+                <div class="row searchBox">
+                    <div class="col-sm-12 searchBox-inner">
+                    <div class="form-group has-feedback">
+                        <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
                     </div>
                 </div>
-                <div class="col-8 col-sm-8 chatview" style="padding: 0;">
-                    <nav class="navbar navbar-light " style="background-color: #F3754C;">
-                        <h3 class = "navbar-brand" id="chatview_nav"style="margin-left: 5px; font-size: 1.5rem;"></h3>
-                    </nav>
-                    <div id="chatbox" class="chatbox">
-                        {% csrf_token %}
+                
+                <div class="row sideBar">
+                    {%for subject in subjects %}
+                    <div class="row sideBar-body" onclick="chatClicked(this.innerText)">
+                      <div class="col-sm-9 col-xs-9 sideBar-main">
+                          <div class="row">
+                          <div class="col-sm-8 col-xs-8 sideBar-name">
+                              <span class="name-meta">{{subject.name}}
+                          </span>
+                          </div>
+                          </div>
+                      </div>
                     </div>
+                    {%endfor%}
+                </div>
+
+                <div class="card footer">
+                  <div class="card-body">
+                    <button class="btn primary " style="background-color: rgba(243, 117, 76, 0.65); margin: 2px;"data-toggle = 'tooltip' title = 'Join a Class/Forum' id = "join-subject" >Join Class</button>
+                    <button class="btn primary" style="background-color: rgba(243, 117, 76, 0.65); margin: 2px;" id="add-subject" data-toggle = 'tooltip' title="Add a subject/forum">Add Class</button>
+                    <button class="btn primary" style="background-color: rgba(243, 117, 76, 0.65); margin: 2px;">
+                        <a href="{%url 'home' %}">Logout</a>
+                    </button>
+                  </div>
                 </div>
             </div>
         </div>
-        
-    </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js'%}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-        
-            $("#add-subject").modalForm({
-                formURL: "{% url 'main:add' %}"
-            });
-        
+        <div class="col-sm-8 conversation" id="con-box">
+        <div class="row heading">
+          <div class="col-sm-8 col-xs-7 heading-name">
+            <h2 class="heading-name-meta" id="chat-heading">
+            </h2>
+            
+          </div>
+        </div>
+        <div class="row message" id="conversation">
+
+        </div>
+        </div>
+  </div>
+</body>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/main_js.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js'%}"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+      var user = "{{user.username|safe}}"
+      set_user(user)
+      var token = '{{csrf_token}}'
+      set_token(token)
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      console.log('modal clicked')
+      $("#add-subject").modalForm({
+        formURL: "{% url 'main:add' %}"
         });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-        
-        $("#join-subject").modalForm({
-            formURL: "{% url 'main:join' %}"
-        });
-    
     });
-    </script>
-    <script src = "{% static 'js/main_js.js'%}"></script>
-    <script type="text/javascript">
-        var user = "{{user.username|safe}}"
-        set_user(user)
-        var token = '{{csrf_token}}'
-        set_token(token)
-    </script>
+  </script>
+
+  <script type="text/javascript">
+          $(document).ready(function() {
+          
+          $("#join-subject").modalForm({
+              formURL: "{% url 'main:join' %}"
+          });
+      
+      });
+  </script>
 </html>

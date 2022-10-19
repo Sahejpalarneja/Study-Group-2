@@ -14,16 +14,16 @@ function set_subject(current_subject){
 function chatClicked(subject_name)
 {
     set_subject(subject_name)
-    document.getElementById('chatbox').innerHTML = ''
+    document.getElementById('conversation').innerHTML = ''
     var header;
-    header = document.getElementById('chatview_nav');
+    header = document.getElementById('chat-heading');
     header.innerText = subject_name;
-    var box = document.getElementById('inputbox');
+    var box = document.getElementById('reply');
     if (box == null){
-    var html = '<input type="text" class="form-control form-control-lg " id="inputbox" placeholder="Type message" ><a class="ms-3" href="#!"><i class="bi bi-send " id="sendButton" onClick="sendMessage()"></i></a>'
-    document.getElementById('chatbox').innerHTML += html
+    var html = '<div class="row reply"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment"></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true" onClick="sendMessage()"></i></div></div>'
     get_messages(subject_name,'getmessage')
     }
+    document.getElementById('con-box').innerHTML += html
     
 }
 function get_messages(subject_name,url){
@@ -43,53 +43,50 @@ function get_messages(subject_name,url){
     )
 
 }
-function addMessages(sub_messages){
-    sub_messages = sub_messages.replaceAll("'",'"') ;
-    sub_messages = JSON.parse(sub_messages)
-    for(let i =0;i<sub_messages.length;i++)
-    {
-        var sender = sub_messages[i]['sender']
-        if (sender === user){
-            addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
-        }
-        else{
-            addLeft(sub_messages[i]['sender'],sub_messages[i]['text'])
-        }
-    }
-}
 function addRight(sender,message){
-    textright = document.createElement("div")
-    textright.classList.add('col-6')
-    textright.classList.add('msg')
-    textright.classList.add('right')
-    var senderp  =  document.createElement('p')
+    textcontainer = document.createElement("div")
+    textcontainer.classList.add('row')
+    textcontainer.classList.add('message-body')
+    textspan = document.createElement('div')
+    textspan.classList.add('col-sm-12')
+    textspan.classList.add('message-main-sender')
+    senderp  =  document.createElement('span')
+    senderp.classList.add('sender')
     senderp.innerHTML = String(sender)
     var textp = document.createElement('p')
+    textp.classList.add('message-text')
     textp.innerHTML = String(message)
-    textright.appendChild(senderp)
-    textright.appendChild(textp)
-    document.getElementById('chatbox').appendChild(textright)
+    senderp.appendChild(textp)
+    textspan.appendChild(senderp)
+    textcontainer.appendChild(textspan)
+    document.getElementById('conversation').appendChild(textcontainer)
 }
 function addLeft(sender,message){
-    var textleft = document.createElement("div")
-    textleft.classList.add('col-6')
-    textleft.classList.add('msg')
-    textleft.classList.add('left')
-    var senderp  =  document.createElement('p')
-    senderp.innerHTML = sender
+    textcontainer = document.createElement("div")
+    textcontainer.classList.add('row')
+    textcontainer.classList.add('message-body-receiver')
+    textspan = document.createElement('div')
+    textspan.classList.add('col-sm-12')
+    textspan.classList.add('message-main-receiver')
+    senderp  =  document.createElement('span')
+    senderp.classList.add('receiver')
+    senderp.innerHTML = String(sender)
     var textp = document.createElement('p')
-    textp.innerHTML = message
-    textleft.appendChild(senderp)
-    textleft.appendChild(textp)
-    document.getElementById('chatbox').appendChild(textleft)
+    textp.classList.add('message-text')
+    textp.innerHTML = String(message)
+    senderp.appendChild(textp)
+    textspan.appendChild(senderp)
+    textcontainer.appendChild(textspan)
+    document.getElementById('conversation').appendChild(textcontainer)
 }
 function addMessages(sub_messages){
     sub_messages = sub_messages.replaceAll("'",'"') ;
-    console.log(sub_messages)
     sub_messages = JSON.parse(sub_messages)
     for(let i =0;i<sub_messages.length;i++)
     {
         var sender = sub_messages[i]['sender']
+
+
         if (sender === user){
             addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
         }
@@ -100,9 +97,9 @@ function addMessages(sub_messages){
 }
 
 function sendMessage(){
-    input_box = document.getElementById('inputbox')
-    message = input_box.value
-    input_box.value = ''
+
+    message = document.getElementById('comment').value
+
     addRight(user,message)
     $.ajax(
         {
