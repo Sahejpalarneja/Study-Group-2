@@ -11,19 +11,27 @@ from rest_framework.authtoken.models import Token
 
 def home_page(request):
 	if request.method == "POST":
-		print(request.POST.get('login'))
-		form = AuthenticationForm(request, data=request.POST)
-		if form.is_valid():
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				return redirect("main:main")
+		auth_type = request.POST['action']
+		if auth_type == 'login':
+			form = AuthenticationForm(request, data=request.POST)
+			if form.is_valid():
+				username = form.cleaned_data.get('username')
+				password = form.cleaned_data.get('password')
+				user = authenticate(username=username, password=password) 
+				if user is not None:
+					login(request, user)
+					return redirect("main:main")
+				else:
+					messages.error(request,"Invalid username or password.")
 			else:
 				messages.error(request,"Invalid username or password.")
-		else:
-			messages.error(request,"Invalid username or password.")
+		elif auth_type == 'register':
+			form = NewUserForm(request.POST)
+			if form.is_valid():
+				user = form.save()
+				login(request, user)
+				return redirect("main:main")
+			messages.error(request, "Unsuccessful registration. Invalid information.")
 
 	login_form = AuthenticationForm()
 	register_form = NewUserForm()
