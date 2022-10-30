@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+{% block content %} 
 {% load static %}
+{% load crispy_forms_tags %}  
 <html>
     <head>
         <title>Master Minds</title>
@@ -11,51 +13,46 @@
         <link href="https://fonts.googleapis.com/css?family=Calibri&display=swap" rel="stylesheet" />
 
 
-        <link href="{% static 'styles/styles.css' %}" rel = "stylesheet"/>
+        <link href="{% static 'styles/Home.css' %}" rel = "stylesheet"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         
     </head>
-    <nav class="navbar navbar-expend-md navbar-light" style="background-color:#F3754C;" >
-        <a href="{% url 'home' %}"class="navbar-brand h1 mb-0">
-            <img class="d-inline-block align-top"
-            src="{% static 'assets/logo_size.jpg' %}" alt="logo" width="50" height="50"/>
-            <h2 class="d-inline-block mt-1">Master Minds</h2>
-        </a>
-        <buton class="navbar-toggler"
-            type="button" 
-            data-bs-toggle="collapse"
-            data-bs-target="#navBar"
-            aria-controls="navbarBar"
-            aria-expanded="false"
-            aria-label="Toggle Navgation"
-            >
-            <span class="navbar-toggler-icon"></span>
-        </buton>
-        <div class="collapse navbar-collapse" id="navBar">
-                <ul class="navbar-nav float-right">
-                    <li class="nav-item active nav-link" >
-                        <a href="{% url 'login' %}" style="color:black ;">Login</a>
-                    </li>
-                    <li class="nav-item active nav-link" >
-                        <a href="{% url 'register' %}" style="color:black ;">Register</a>
-                        
-                    </li>
-                </ul>
-        </div>
-    </nav>
     <body>
-        <div class="container-fluid background"> 
-            <div class="row empty"></div>
-            <div class="row ">
-                <div class="col-sm-3 offset-sm-2">
-                    <img class="img-reponsive" src="{% static 'assets/logo_size.jpg' %}" alt="logo">
-                </div>
-                <div class="col-sm-6">
-                    <span class="desc ">About:<br/>Master Minds is a knowledge sharing platform where people can create forums to discuss any topic or subject.Master Minds has an open Community which can be joined by any one wanting to learn about anything, ask questions, answer other questions and take advantage of peer-to peer learning.</span>
-                </div>
+        <div id="header_wrapper">
+            <div id="header">
+                <span class="heading">
+                    <img class="d-inline-block align-top"
+                    src="{% static 'assets/logo_size.jpg' %}" alt="logo" width="50" height="50"/>
+                    <h2 class="d-inline-block mt-1">Master Minds</h2>
+                </span>
+                <form method="POST" value="login">
+                    {% csrf_token %}
+                    {{login_form|crispy}}
+                    <div><button class="btn btn-primary" type="submit" >Login</button></div>
+
+                </form>
             </div>
         </div>
-    </body>
+        <div id="wrapper">
+            <div id="div1" class="col-sm-6">         
+            </div>
+            <div id="div2"class="col-sm-6">
+                <h1 style="color:white ;" >Register</h1>
+    
+                <p style="color:white ;">It's free and always will be.</p>
+                <form method="POST" style="color: white; margin-left: 10px;"> 
+                    {% csrf_token %}
+                    {{ register_form|crispy }}                    
+                    <button class="btn btn-primary" type="submit" name="register">Register</button>
+                </form>
+                <li style="color:white ;" id="terms">By clicking Create an account, you agree to our <a href="">Terms</a> and that <br>you have read our <a href="">Data Policy</a>, including our <a href="">Cookie Use</a>.</li>
+                
+            </div>
+    
+        </div>
+        
+    </body> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    {% endblock %}
 </html> 
 
