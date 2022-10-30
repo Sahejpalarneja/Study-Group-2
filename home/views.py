@@ -10,7 +10,25 @@ from rest_framework.authtoken.models import Token
 # Create your views here.
 
 def home_page(request):
-	return render(request,'home.html')
+	if request.method == "POST":
+		print(request.POST.get('login'))
+		form = AuthenticationForm(request, data=request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request, user)
+				return redirect("main:main")
+			else:
+				messages.error(request,"Invalid username or password.")
+		else:
+			messages.error(request,"Invalid username or password.")
+
+	login_form = AuthenticationForm()
+	register_form = NewUserForm()
+
+	return render(request=request, template_name="home.html", context={"login_form":login_form,"register_form":register_form})
 
 def login_page(request):
 	if request.method == "POST":
