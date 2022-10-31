@@ -42,15 +42,15 @@
                     </div>
                 </div>
                 
-                <div class="row sideBar">
+                <div class="row sideBar overflow">
                     {%for subject in subjects %}
                     <div class="row sideBar-body" onclick="chatClicked(this.innerText)">
                       <div class="col-sm-9 col-xs-9 sideBar-main">
                           <div class="row">
-                          <div class="col-sm-8 col-xs-8 sideBar-name">
+                            <div class="col-sm-8 col-xs-8 sideBar-name">
                               <span class="name-meta">{{subject.name}}
-                          </span>
-                          </div>
+                              </span>
+                            </div>
                           </div>
                       </div>
                     </div>
@@ -96,7 +96,6 @@
   </script>
   <script type="text/javascript">
     $(document).ready(function() {
-      console.log('modal clicked')
       $("#add-subject").modalForm({
         formURL: "{% url 'main:add' %}"
         });
@@ -111,6 +110,4 @@
       
       });
   </script>
-
-  
 </html>

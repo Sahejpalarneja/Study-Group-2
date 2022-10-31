@@ -20,9 +20,10 @@ function chatClicked(subject_name)
     header.innerText = subject_name;
     var box = document.getElementById('reply-box');
     if (box == null){
-    var html = '<div class="row reply" id="reply-box"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment"></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true" onClick="sendMessage()"></i></div></div>'
+    var html = '<div class="row reply" id="reply-box"><div class="col-sm-11 col-xs-11 reply-main"><textarea class="form-control" rows="1" id="comment" ></textarea></div><div class="col-sm-1 col-xs-1 reply-send"><i class="fa fa-send fa-2x" aria-hidden="true" onClick="sendMessage()"></i></div></div>'
     get_messages(subject_name,'getmessage')
     document.getElementById('con-box').innerHTML += html
+    document.getElementById('comment').addEventListener("keypress",sendOnEnter)
     }
     else{
         get_messages(subject_name,'getmessage')
@@ -120,4 +121,10 @@ function sendMessage(){
             }
         }
     )
+}
+function sendOnEnter(event){
+    if(event.which === 13){
+        event.preventDefault(); // Prevents the addition of a new line in the text field (not needed in a lot of cases)
+        sendMessage();
+    }
 }
