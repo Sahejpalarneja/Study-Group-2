@@ -102,7 +102,9 @@ function addMessages(sub_messages){
 
 function sendMessage(){
 
-    message = document.getElementById('comment').value
+    comment_box = document.getElementById('comment')
+    message = comment_box.value
+    comment_box.value = ''
     addRight(user,message)
     $.ajax(
         {
