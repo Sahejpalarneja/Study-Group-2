@@ -78,7 +78,7 @@ def send_message(request):
         timestamp = datetime.now()
         subject = request.POST['subject']
         n_code = Subject.objects.get(name = subject)
-        message_obj = Message(sender = sender,text = message,N_code = n_code.neptun ,timestamp = timestamp)
+        message_obj = Message(sender = sender,text = message.strip(),N_code = n_code.neptun ,timestamp = timestamp)
         message_obj.save()
         return HttpResponse('Success')
     return HttpResponse("Dikkat")

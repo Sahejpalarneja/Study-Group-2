@@ -11,52 +11,33 @@ from rest_framework.authtoken.models import Token
 
 def home_page(request):
 	if request.method == "POST":
-		print(request.POST.get('login'))
-		form = AuthenticationForm(request, data=request.POST)
-		if form.is_valid():
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				return redirect("main:main")
+		auth_type = request.POST['action']
+		if auth_type == 'login':
+			form = AuthenticationForm(request, data=request.POST)
+			if form.is_valid():
+				username = form.cleaned_data.get('username')
+				password = form.cleaned_data.get('password')
+				user = authenticate(username=username, password=password) 
+				if user is not None:
+					login(request, user)
+					return redirect("main:main")
+				else:
+					messages.error(request,"Invalid username or password.")
 			else:
 				messages.error(request,"Invalid username or password.")
-		else:
-			messages.error(request,"Invalid username or password.")
+		elif auth_type == 'register':
+			form = NewUserForm(request.POST)
+			if form.is_valid():
+				user = form.save()
+				login(request, user)
+				return redirect("main:main")
+			messages.error(request, "Unsuccessful registration. Invalid information.")
 
 	login_form = AuthenticationForm()
 	register_form = NewUserForm()
 
 	return render(request=request, template_name="home.html", context={"login_form":login_form,"register_form":register_form})
 
-def login_page(request):
-	if request.method == "POST":
-		form = AuthenticationForm(request, data=request.POST)
-		if form.is_valid():
-			username = form.cleaned_data.get('username')
-			password = form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				return redirect("main:main")
-			else:
-				messages.error(request,"Invalid username or password.")
-		else:
-			messages.error(request,"Invalid username or password.")
-	form = AuthenticationForm()
-	return render(request=request, template_name="registration/login.html", context={"login_form":form})
-
-def register_page(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			return redirect("main:main")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm()
-	return render (request=request, template_name="registration/register.html", context={"register_form":form})
 
 
 @receiver(post_save,sender = settings.AUTH_USER_MODEL)

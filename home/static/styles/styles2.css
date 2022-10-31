@@ -18,13 +18,6 @@ body {
 html{
   height: 100%;
 }
-.fa-2x {
-  font-size: 1.5em;
-}
-.username{
-  width: auto;
-}
-
 .app {
   position: relative;
   overflow: hidden;
@@ -72,17 +65,6 @@ a{
   z-index: 1000;
 }
 
-.heading-avatar {
-  padding: 0;
-  cursor: pointer;
-
-}
-
-.heading-avatar-icon img {
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-}
 
 .heading-name {
   padding: 0 !important;
@@ -106,34 +88,6 @@ a{
   font-size: 12px;
   color: #93918f;
 }
-.heading-compose {
-  padding: 0;
-}
-
-.heading-compose i {
-  text-align: center;
-  padding: 5px;
-  color: #93918f;
-  cursor: pointer;
-}
-
-.heading-dot {
-  padding: 0;
-  margin-left: 10px;
-  position: absolute;
-  background-color: rgba(243, 117, 76, 0.65);
-  display: block;
-  visibility: visible;
-  width: fit-content;
-  right: 10px;
-}
-
-.heading-dot i {
-  text-align: right;
-  padding: 5px;
-  color: #93918f;
-  cursor: pointer;
-}
 
 .searchBox {
   padding: 0 !important;
@@ -150,11 +104,6 @@ a{
   width: 100%;
   padding: 10px !important;
   background-color: #fbfbfb;
-}
-.searchBox-inner input:focus {
-  outline: none;
-  border: none;
-  box-shadow: none;
 }
 
 .sideBar {
@@ -174,23 +123,14 @@ a{
   border-bottom-width: 1px;
   border-bottom-color: grey;
 }
+
 .footer{
   position: absolute;
   bottom: 0px;
 }
+
 .sideBar-body:hover {
   background-color: #f2f2f2;
-}
-
-.sideBar-avatar {
-  text-align: center;
-  padding: 0 !important;
-}
-
-.avatar-icon img {
-  border-radius: 50%;
-  height: 49px;
-  width: 49px;
 }
 
 .sideBar-main {
@@ -215,91 +155,6 @@ a{
   color: #000;
 }
 
-.sideBar-time {
-  padding: 10px !important;
-}
-
-.time-meta {
-  text-align: right;
-  font-size: 12px;
-  padding: 1% !important;
-  color: rgba(0, 0, 0, .4);
-  vertical-align: baseline;
-}
-
-/*New Message*/
-
-.newMessage {
-  padding: 0 !important;
-  margin: 0 !important;
-  height: 100%;
-  position: relative;
-  left: -100%;
-}
-.newMessage-heading {
-  padding: 10px 16px 10px 15px !important;
-  margin: 0 !important;
-  height: 100px;
-  width: 100%;
-  background-color: #00bfa5;
-  z-index: 1001;
-}
-
-.newMessage-main {
-  padding: 10px 16px 0 15px !important;
-  margin: 0 !important;
-  height: 60px;
-  margin-top: 30px !important;
-  width: 100%;
-  z-index: 1001;
-  color: #fff;
-}
-
-.newMessage-title {
-  font-size: 18px;
-  font-weight: 700;
-  padding: 10px 5px !important;
-}
-.newMessage-back {
-  text-align: center;
-  vertical-align: baseline;
-  padding: 12px 5px !important;
-  display: block;
-  cursor: pointer;
-}
-.newMessage-back i {
-  margin: auto !important;
-}
-
-.composeBox {
-  padding: 0 !important;
-  margin: 0 !important;
-  height: 60px;
-  width: 100%;
-}
-
-.composeBox-inner {
-  height: 100%;
-  width: 100%;
-  padding: 10px !important;
-  background-color: #fbfbfb;
-}
-
-.composeBox-inner input:focus {
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
-
-.compose-sideBar {
-  padding: 0 !important;
-  margin: 0 !important;
-  background-color: #fff;
-  overflow-y: auto;
-  border: 1px solid #f7f7f7;
-  height: calc(100% - 160px);
-}
-
 /*Conversation*/
 
 .conversation {
@@ -319,18 +174,6 @@ a{
   overflow-y: auto;
   border: 1px solid #f7f7f7;
   height: calc(100% - 120px);
-}
-.message-previous {
-  margin : 0 !important;
-  padding: 0 !important;
-  height: auto;
-  width: 100%;
-}
-.previous {
-  font-size: 15px;
-  text-align: center;
-  padding: 10px !important;
-  cursor: pointer;
 }
 
 .previous a {
@@ -367,14 +210,6 @@ a{
   padding-bottom: 0 !important;
 }
 
-.message-time {
-  margin: 0 !important;
-  margin-left: 50px !important;
-  font-size: 12px;
-  text-align: right;
-  color: #9a9a9a;
-
-}
 
 .receiver {
   width: 60% !important;
@@ -440,13 +275,6 @@ a{
   box-shadow: none;
   height: 100%;
   font-size: 16px;
-}
-
-.reply-main textarea:focus {
-  outline: none;
-  border: none;
-  text-indent: 5px;
-  box-shadow: none;
 }
 
 @media screen and (max-width: 700px) {
