@@ -203,6 +203,7 @@ a{
 
 .message-text {
   margin: 0 !important;
+  margin-top: 2px;
   padding: 5px !important;
   word-wrap:break-word;
   font-weight: 200;
@@ -235,6 +236,27 @@ a{
   display: inline-block;
   word-wrap: break-word;
 }
+.sender-time{
+  float: right;
+  width: 60% !important;
+  height: auto !important;
+  font-size: 12px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  display: inline-block;
+  word-wrap: break-word;
+
+}
+.sender-p{
+  float: left;
+  width: 30% !important;
+  height: auto !important;
+  font-size: 12px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  display: inline-block;
+  word-wrap: break-word;
+  
+}
+
 
 
 /*Reply*/
