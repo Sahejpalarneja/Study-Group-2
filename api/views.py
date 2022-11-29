@@ -12,7 +12,12 @@ from rest_framework.authtoken.models import Token
 from api import serializer
 
 
-
+@api_view(['GET',])
+@permission_classes([])
+def get_subjects(request):
+    subjects = Subject.objects.all()
+    serializer = SubjectSerializer(subjects,many = True)
+    return JsonResponse(serializer.data, safe = False)
 
 # Create your views here.
 @api_view(['POST',])

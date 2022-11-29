@@ -102,9 +102,7 @@ function addLeft(message){
 }
 function addMessages(sub_messages){
     sub_messages = sub_messages.replaceAll("'",'"') ;
-    
-    sub_messages = JSON.parse(sub_messages)
-    console.log(sub_messages)
+    sub_messages = JSON.parse(sub_messages);
     for(let i =0;i<sub_messages.length;i++)
     {
         var sender = sub_messages[i]['sender']
