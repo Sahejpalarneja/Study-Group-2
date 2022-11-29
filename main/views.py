@@ -88,7 +88,7 @@ def get_message(request):
         subject = Subject.objects.get(name = request.GET['subject'] )
         l = Message.objects.filter(N_code = subject.neptun).order_by('timestamp')
         print(len(l))
-        message_list = [{'sender':message.sender,'text':message.text} for message in l ]
+        message_list = [{'sender':message.sender,'text':message.text,'datetime':''.join(str(message.timestamp).split('.')[:-1])} for message in l ]
         message_list = json.dumps(message_list,indent=2)
         return HttpResponse(message_list)
         

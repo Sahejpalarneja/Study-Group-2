@@ -9,17 +9,17 @@ class Subject(models.Model):
 
     name = models.CharField(
         max_length=200,
-        help_text='Enter the name of the Subject/Forum',
-        validators=[MinLengthValidator(1,"Please enter a subject/forum name")]
+        help_text='Enter the name of the Group/Forum',
+        validators=[MinLengthValidator(1,"Please enter a Group/forum name")]
     )
     neptun =  models.CharField(
         max_length=10,
         help_text='Enter the subject/forum code',
-        validators=[MinLengthValidator(1,"Please Enter a subject/forum code")]
+        validators=[MinLengthValidator(1,"Please Enter a group/forum code")]
     )
     professor = models.CharField(
         max_length=200,
-        help_text="Enter the name of the Professor if exists"
+        help_text="Enter the name of the admin if exists"
     )
 
     def __str__(self) -> str:

@@ -12,7 +12,12 @@ from rest_framework.authtoken.models import Token
 from api import serializer
 
 
-
+@api_view(['GET',])
+@permission_classes([])
+def get_subjects(request):
+    subjects = Subject.objects.all()
+    serializer = SubjectSerializer(subjects,many = True)
+    return JsonResponse(serializer.data, safe = False)
 
 # Create your views here.
 @api_view(['POST',])
@@ -39,12 +44,6 @@ def get_messages(request):
     serializer = MessageSerilizer(messages, many = True)
     return JsonResponse(serializer.data,safe=False)
 
-@api_view(['GET',])
-@permission_classes([])
-def get_subjects(request):
-    subjects = Subject.objects.all()
-    serializer = SubjectSerializer(subjects,many = True)
-    return JsonResponse(serializer.data, safe = False)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -90,12 +89,9 @@ def add_subject(request):
 @permission_classes([IsAuthenticated])
 def send_message(request):
     data = request.data
-    data._mutable = True
-    data['timestamp'] = datetime.datetime.now()
-    data._mutable = False
     serializer = MessageSerilizer(data = data)
     if serializer.is_valid():
         serializer.save()
-        return Response('Sent')
+        return Response(data=data)
     else:
         return Response('Wrong values')

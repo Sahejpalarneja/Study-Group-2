@@ -48,25 +48,41 @@ function get_messages(subject_name,url){
     )
 
 }
-function addRight(sender,message){
+function addRight(message){
     textcontainer = document.createElement("div")
     textcontainer.classList.add('row')
     textcontainer.classList.add('message-body')
+
     textspan = document.createElement('div')
     textspan.classList.add('col-sm-12')
     textspan.classList.add('message-main-sender')
-    senderp  =  document.createElement('span')
-    senderp.classList.add('sender')
-    senderp.innerHTML = String(sender)
-    var textp = document.createElement('p')
+
+    sender_span  =  document.createElement('span')
+    sender_span.classList.add('sender')
+
+    sender_p = document.createElement('p')
+    sender_p.classList.add('sender-p')
+    sender_p.innerHTML = String(message['sender'])
+
+    time = document.createElement('p')
+    time.classList.add('sender-time')
+    time.innerHTML = String(message['datetime'])
+
+    textp = document.createElement('p')
     textp.classList.add('message-text')
-    textp.innerHTML = String(message)
-    senderp.appendChild(textp)
-    textspan.appendChild(senderp)
+    textp.innerHTML = String(message['text'])
+
+    sender_span.appendChild(sender_p)
+    sender_span.appendChild(time)
+    sender_span.appendChild(textp)
+
+    textspan.appendChild(sender_span)
+
     textcontainer.appendChild(textspan)
+
     document.getElementById('conversation').appendChild(textcontainer)
 }
-function addLeft(sender,message){
+function addLeft(message){
     textcontainer = document.createElement("div")
     textcontainer.classList.add('row')
     textcontainer.classList.add('message-body-receiver')
@@ -75,10 +91,10 @@ function addLeft(sender,message){
     textspan.classList.add('message-main-receiver')
     senderp  =  document.createElement('span')
     senderp.classList.add('receiver')
-    senderp.innerHTML = String(sender)
+    senderp.innerHTML = String(message['sender'])
     var textp = document.createElement('p')
     textp.classList.add('message-text')
-    textp.innerHTML = String(message)
+    textp.innerHTML = String(message['text'])
     senderp.appendChild(textp)
     textspan.appendChild(senderp)
     textcontainer.appendChild(textspan)
@@ -86,17 +102,17 @@ function addLeft(sender,message){
 }
 function addMessages(sub_messages){
     sub_messages = sub_messages.replaceAll("'",'"') ;
-    sub_messages = JSON.parse(sub_messages)
+    sub_messages = JSON.parse(sub_messages);
     for(let i =0;i<sub_messages.length;i++)
     {
         var sender = sub_messages[i]['sender']
 
 
         if (sender === user){
-            addRight(sub_messages[i]['sender'],sub_messages[i]['text'])
+            addRight(sub_messages[i])
         }
         else{
-            addLeft(sub_messages[i]['sender'],sub_messages[i]['text'])
+            addLeft(sub_messages[i])
         }
     }
 }
