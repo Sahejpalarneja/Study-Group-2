@@ -39,12 +39,6 @@ def get_messages(request):
     serializer = MessageSerilizer(messages, many = True)
     return JsonResponse(serializer.data,safe=False)
 
-@api_view(['GET',])
-@permission_classes([])
-def get_subjects(request):
-    subjects = Subject.objects.all()
-    serializer = SubjectSerializer(subjects,many = True)
-    return JsonResponse(serializer.data, safe = False)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
