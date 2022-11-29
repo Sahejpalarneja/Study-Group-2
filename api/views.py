@@ -89,12 +89,9 @@ def add_subject(request):
 @permission_classes([IsAuthenticated])
 def send_message(request):
     data = request.data
-    data._mutable = True
-    data['timestamp'] = datetime.datetime.now()
-    data._mutable = False
     serializer = MessageSerilizer(data = data)
     if serializer.is_valid():
         serializer.save()
-        return Response('Sent')
+        return Response(data=data)
     else:
         return Response('Wrong values')
